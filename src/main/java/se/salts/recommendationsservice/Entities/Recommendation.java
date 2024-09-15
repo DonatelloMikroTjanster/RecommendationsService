@@ -3,29 +3,30 @@ package se.salts.recommendationsservice.Entities;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "recommendations")
 public class Recommendation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "media_id", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "media_id")
     private Media media;
 
-    private String reason;
+    private boolean listened;
 
-    public Recommendation() {}
+    public Recommendation() {
+    }
 
-    public Recommendation(User user, Media media, String reason) {
+    public Recommendation(Long id, User user, Media media, boolean listened) {
+        this.id = id;
         this.user = user;
         this.media = media;
-        this.reason = reason;
+        this.listened = listened;
     }
 
     public Long getId() {
@@ -52,11 +53,11 @@ public class Recommendation {
         this.media = media;
     }
 
-    public String getReason() {
-        return reason;
+    public boolean isListened() {
+        return listened;
     }
 
-    public void setReason(String reason) {
-        this.reason = reason;
+    public void setListened(boolean listened) {
+        this.listened = listened;
     }
 }

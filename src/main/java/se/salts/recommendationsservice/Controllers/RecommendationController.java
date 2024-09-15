@@ -1,4 +1,5 @@
-package se.salts.recommendationsservice.Controllers;// RecommendationController.java
+package se.salts.recommendationsservice.Controllers;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -8,7 +9,6 @@ import se.salts.recommendationsservice.Entities.Media;
 import se.salts.recommendationsservice.Services.RecommendationService;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/recommendations")
@@ -19,8 +19,6 @@ public class RecommendationController {
 
     @GetMapping("/{userId}")
     public List<Media> getRecommendations(@PathVariable Long userId) {
-        List<Media> recommendations = recommendationService.getTopRecommendations(userId);
-        return recommendations.stream().distinct().collect(Collectors.toList());
+        return recommendationService.getTopRecommendations(userId);
     }
-
 }

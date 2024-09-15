@@ -30,7 +30,7 @@ public class RecommendationService {
         List<Long> excludedGenreIds = new ArrayList<>(topGenreIds);
         List<Media> mediaFromOtherGenres = mediaRepository.findMediaByNotInGenresAndNotIn(excludedGenreIds, listenedMediaIds);
 
-        int otherGenreCount = (int) Math.ceil(0.2 * 10);
+        int otherGenreCount = (int) Math.ceil(0.2 * 10); // 20% of 10 = 2
         Set<Media> recommendedMedia = mediaFromTopGenres.stream().collect(Collectors.toSet());
 
         if (mediaFromOtherGenres.size() < otherGenreCount) {
@@ -49,7 +49,9 @@ public class RecommendationService {
             recommendedMedia.addAll(similarMedia.stream().limit(remainingSpace).collect(Collectors.toList()));
         }
 
-        return recommendedMedia.stream().limit(10).collect(Collectors.toList());
+        return recommendedMedia.stream()
+                .limit(10)
+                .collect(Collectors.toList());
     }
 
     private List<Media> getSimilarMedia(Long userId) {

@@ -35,6 +35,7 @@ public class Media {
         this.title = title;
     }
 
+    // Getters and Setters
     public Long getId() {
         return id;
     }
@@ -67,5 +68,11 @@ public class Media {
 
     public void setGenre(Genre genre) {
         this.genre = genre;
+    }
+
+    // Method to include user's name in the response
+    @Transient
+    public String getUserName() {
+        return user != null ? user.getName() : null;
     }
 }

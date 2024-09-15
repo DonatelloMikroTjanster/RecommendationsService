@@ -1,29 +1,39 @@
 package se.salts.recommendationsservice.Entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "media")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Media {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
+    @Column(name = "title", nullable = false)
     private String title;
-    private String mediaCategory;
 
-    public Media(Long id, String title, String mediaCategory) {
-        this.id = id;
-        this.title = title;
-        this.mediaCategory = mediaCategory;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    @JsonIgnore
+    private User user;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "genre_id", nullable = false)
+    @JsonIgnore
+    private Genre genre;
+
+    public Media() {
     }
 
-    public Media() {}
+    public Media(Long id, String title) {
+        this.id = id;
+        this.title = title;
+    }
 
     public Long getId() {
         return id;
@@ -41,11 +51,21 @@ public class Media {
         this.title = title;
     }
 
-    public String getMediaCategory() {
-        return mediaCategory;
+    @JsonIgnore
+    public User getUser() {
+        return user;
     }
 
-    public void setMediaCategory(String mediaCategory) {
-        this.mediaCategory = mediaCategory;
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    @JsonIgnore
+    public Genre getGenre() {
+        return genre;
+    }
+
+    public void setGenre(Genre genre) {
+        this.genre = genre;
     }
 }

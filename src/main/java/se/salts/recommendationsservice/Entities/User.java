@@ -1,26 +1,39 @@
 package se.salts.recommendationsservice.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
+import java.util.List;
+import java.util.Set;
+
 @Entity
-@Table(name = "users")
+@Table(name = "my_user")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
-    private String username;
-    private String email;
+    @Column(name = "name", nullable = false)
+    private String name;
 
-    public User(Long id, String username, String email) {
-        this.id = id;
-        this.username = username;
-        this.email = email;
-    }
+    @OneToMany(mappedBy = "user")
+    @JsonIgnore
+    private List<Media> media;
+
+    @OneToMany(mappedBy = "user")
+    private Set<Recommendation> recommendations;
 
     public User() {
+    }
 
+    public User(Long id, String name, Set<Recommendation> recommendations) {
+        this.id = id;
+        this.name = name;
+        this.recommendations = recommendations;
     }
 
     public Long getId() {
@@ -31,19 +44,27 @@ public class User {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
+    public String getName() {
+        return name;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getEmail() {
-        return email;
+    public List<Media> getMedia() {
+        return media;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setMedia(List<Media> media) {
+        this.media = media;
+    }
+
+    public Set<Recommendation> getRecommendations() {
+        return recommendations;
+    }
+
+    public void setRecommendations(Set<Recommendation> recommendations) {
+        this.recommendations = recommendations;
     }
 }

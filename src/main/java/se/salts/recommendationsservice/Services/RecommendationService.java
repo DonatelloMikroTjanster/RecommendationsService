@@ -3,17 +3,20 @@ package se.salts.recommendationsservice.Services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import se.salts.recommendationsservice.Entities.Media;
+import se.salts.recommendationsservice.Entities.Recommendation;
 import se.salts.recommendationsservice.Entities.User;
 import se.salts.recommendationsservice.Repositories.MediaRepository;
+import se.salts.recommendationsservice.Repositories.RecommendationRepository;
 import se.salts.recommendationsservice.Repositories.UserRepository;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
 public class RecommendationService {
+
+    @Autowired
+    private RecommendationRepository recommendationRepository;
 
     @Autowired
     private MediaRepository mediaRepository;
@@ -22,46 +25,29 @@ public class RecommendationService {
     private UserRepository userRepository;
 
     public List<Media> getTopRecommendations(Long userId) {
+
         User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
-        List<Long> listenedMediaIds = user.getMedia().stream().map(Media::getId).collect(Collectors.toList());
-        List<Long> topGenreIds = userRepository.findTopGenresForUser(userId).stream().limit(3).collect(Collectors.toList());
+        Set<Long> topGenreIds = getTopGenreIds(userId);
 
-        List<Media> mediaFromTopGenres = mediaRepository.findMediaByGenreAndNotIn(topGenreIds, listenedMediaIds);
-        List<Long> excludedGenreIds = new ArrayList<>(topGenreIds);
-        List<Media> mediaFromOtherGenres = mediaRepository.findMediaByNotInGenresAndNotIn(excludedGenreIds, listenedMediaIds);
+        List<Media> genreMedia = mediaRepository.findByGenreIdIn(topGenreIds);
 
-        int otherGenreCount = (int) Math.ceil(0.2 * 10);
-        Set<Media> recommendedMedia = mediaFromTopGenres.stream().collect(Collectors.toSet());
+        List<Media> otherGenreMedia = mediaRepository.findAll();
+        otherGenreMedia.removeAll(genreMedia); // Remove media from top genres
 
-        if (mediaFromOtherGenres.size() < otherGenreCount) {
-            recommendedMedia.addAll(mediaFromOtherGenres);
-        } else {
-            recommendedMedia.addAll(mediaFromOtherGenres.subList(0, otherGenreCount));
-        }
+        Collections.shuffle(otherGenreMedia);
+        int numberOfOtherGenreRecommendations = (int) Math.ceil(otherGenreMedia.size() * 0.20);
+        List<Media> selectedOtherGenreMedia = otherGenreMedia.subList(0, Math.min(numberOfOtherGenreRecommendations, otherGenreMedia.size()));
 
-        if (recommendedMedia.size() > 10) {
-            recommendedMedia = recommendedMedia.stream().limit(10).collect(Collectors.toSet());
-        }
+        List<Media> allRecommendations = new ArrayList<>(genreMedia);
+        allRecommendations.addAll(selectedOtherGenreMedia);
+        allRecommendations = allRecommendations.stream().distinct().collect(Collectors.toList());
 
-        List<Media> similarMedia = getSimilarMedia(userId);
-        if (recommendedMedia.size() < 10) {
-            int remainingSpace = 10 - recommendedMedia.size();
-            recommendedMedia.addAll(similarMedia.stream().limit(remainingSpace).collect(Collectors.toList()));
-        }
-
-        return recommendedMedia.stream().limit(10).collect(Collectors.toList());
+        return allRecommendations.stream()
+                .limit(10)
+                .collect(Collectors.toList());
     }
 
-    private List<Media> getSimilarMedia(Long userId) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
-        List<Long> listenedMediaIds = user.getMedia().stream().map(Media::getId).collect(Collectors.toList());
-
-        List<Long> genres = user.getMedia().stream()
-                .map(media -> media.getGenre().getId())
-                .distinct()
-                .collect(Collectors.toList());
-
-        List<Media> similarMedia = mediaRepository.findMediaByGenreAndNotIn(genres, listenedMediaIds);
-        return similarMedia.stream().limit(10).collect(Collectors.toList());
+    private Set<Long> getTopGenreIds(Long userId) {
+        return new HashSet<>();
     }
 }

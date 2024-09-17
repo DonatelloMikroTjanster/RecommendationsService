@@ -1,28 +1,37 @@
 package se.salts.recommendationsservice.Entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "recommendation")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Recommendation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @JsonBackReference
     private User user;
 
     @ManyToOne
     @JoinColumn(name = "media_id")
+    @JsonBackReference
     private Media media;
 
-    private boolean listened;
+
+    @Column(name = "listened")
+    private Boolean listened;
 
     public Recommendation() {
     }
 
-    public Recommendation(Long id, User user, Media media, boolean listened) {
+    public Recommendation(Long id, User user, Media media, Boolean listened) {
         this.id = id;
         this.user = user;
         this.media = media;
@@ -53,11 +62,11 @@ public class Recommendation {
         this.media = media;
     }
 
-    public boolean isListened() {
+    public Boolean getListened() {
         return listened;
     }
 
-    public void setListened(boolean listened) {
+    public void setListened(Boolean listened) {
         this.listened = listened;
     }
 }

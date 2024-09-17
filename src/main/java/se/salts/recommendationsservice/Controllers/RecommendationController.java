@@ -1,5 +1,8 @@
-package se.salts.recommendationsservice.Controllers;// RecommendationController.java
+package se.salts.recommendationsservice.Controllers;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,9 +21,13 @@ public class RecommendationController {
     private RecommendationService recommendationService;
 
     @GetMapping("/{userId}")
-    public List<Media> getRecommendations(@PathVariable Long userId) {
-        List<Media> recommendations = recommendationService.getTopRecommendations(userId);
-        return recommendations.stream().distinct().collect(Collectors.toList());
+    public ResponseEntity<List<Media>> getRecommendations(@PathVariable Long userId) {
+        try {
+            List<Media> recommendations = recommendationService.getTopRecommendations(userId);
+            List<Media> distinctRecommendations = recommendations.stream().distinct().collect(Collectors.toList());
+            return ResponseEntity.ok(distinctRecommendations);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
     }
-
 }

@@ -1,6 +1,6 @@
 package se.salts.recommendationsservice.Entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
@@ -17,22 +17,24 @@ public class Media {
     @Column(name = "title", nullable = false)
     private String title;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
-    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "genre_id")
+    private Genre genre;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    @JsonBackReference
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "genre_id", nullable = false)
-    @JsonIgnore
-    private Genre genre;
 
     public Media() {
     }
 
-    public Media(Long id, String title) {
+    public Media(Long id, String title, Genre genre, User user) {
         this.id = id;
         this.title = title;
+        this.genre = genre;
+        this.user = user;
     }
 
     public Long getId() {
@@ -51,21 +53,19 @@ public class Media {
         this.title = title;
     }
 
-    @JsonIgnore
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    @JsonIgnore
     public Genre getGenre() {
         return genre;
     }
 
     public void setGenre(Genre genre) {
         this.genre = genre;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

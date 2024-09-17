@@ -1,11 +1,11 @@
 package se.salts.recommendationsservice.Entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import java.util.Set;
 
 @Entity
 @Table(name = "genre")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Genre {
 
     @Id
@@ -15,10 +15,6 @@ public class Genre {
 
     @Column(name = "name", nullable = false)
     private String name;
-
-    @OneToMany(mappedBy = "genre")
-    @JsonIgnore
-    private Set<Media> media;
 
     public Genre() {
     }
@@ -42,13 +38,5 @@ public class Genre {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Set<Media> getMedia() {
-        return media;
-    }
-
-    public void setMedia(Set<Media> media) {
-        this.media = media;
     }
 }

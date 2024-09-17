@@ -1,9 +1,8 @@
 package se.salts.recommendationsservice.Entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-
 import java.util.List;
 import java.util.Set;
 
@@ -21,18 +20,21 @@ public class User {
     private String name;
 
     @OneToMany(mappedBy = "user")
-    @JsonIgnore
+    @JsonManagedReference
     private List<Media> media;
 
     @OneToMany(mappedBy = "user")
+    @JsonManagedReference
     private Set<Recommendation> recommendations;
+
 
     public User() {
     }
 
-    public User(Long id, String name, Set<Recommendation> recommendations) {
+    public User(Long id, String name, List<Media> media, Set<Recommendation> recommendations) {
         this.id = id;
         this.name = name;
+        this.media = media;
         this.recommendations = recommendations;
     }
 

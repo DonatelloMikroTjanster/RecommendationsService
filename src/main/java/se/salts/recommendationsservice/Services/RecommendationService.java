@@ -32,7 +32,7 @@ public class RecommendationService {
         List<Media> genreMedia = mediaRepository.findByGenreIdIn(topGenreIds);
 
         List<Media> otherGenreMedia = mediaRepository.findAll();
-        otherGenreMedia.removeAll(genreMedia); // Remove media from top genres
+        otherGenreMedia.removeAll(genreMedia);
 
         Collections.shuffle(otherGenreMedia);
         int numberOfOtherGenreRecommendations = (int) Math.ceil(otherGenreMedia.size() * 0.20);

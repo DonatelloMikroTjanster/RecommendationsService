@@ -14,29 +14,29 @@ INSERT INTO genre (id, name) VALUES
                                  (6, 'Hip Hop');
 
 INSERT INTO media (title, user_id, genre_id) VALUES
-                                                 ('Don''t Start Now', 1, 2),      -- Pop
-                                                 ('Levitating', 1, 2),           -- Pop
-                                                 ('Bad Guy', 2, 2),              -- Pop
-                                                 ('Watermelon Sugar', 2, 2),     -- Pop
-                                                 ('Physical', 1, 2),            -- Pop
-                                                 ('Say So', 1, 2),              -- Pop
-                                                 ('Happier', 2, 2),             -- Pop
-                                                 ('Peaches', 2, 2),            -- Pop
-                                                 ('Freddie Freeloader', 3, 3), -- Jazz
-                                                 ('Take Five', 3, 3),          -- Jazz
-                                                 ('My Favorite Things', 3, 3), -- Jazz
-                                                 ('All Blues', 3, 3),           -- Jazz
-                                                 ('Take the "A" Train', 3, 3),  -- Jazz
-                                                 ('In a Sentimental Mood', 3, 3), -- Jazz
-                                                 ('The Four Seasons: Spring', 4, 4),    -- Classical
-                                                 ('Rhapsody in Blue', 4, 4),   -- Classical
-                                                 ('Moonlight Sonata', 4, 4),     -- Classical
-                                                 ('Hungarian Dance No. 5', 4, 4), -- Classical
-                                                 ('Ave Maria', 4, 4),            -- Classical
-                                                 ('Ode to Joy', 4, 4),          -- Classical
-                                                 ('Titanium', 5, 5),           -- Electronic
-                                                 ('Wake Me Up', 5, 5),    -- Electronic
-                                                 ('Levels', 5, 5),               -- Electronic
+                                                 ('Don''t Start Now', 1, 2),
+                                                 ('Levitating', 1, 2),
+                                                 ('Bad Guy', 2, 2),
+                                                 ('Watermelon Sugar', 2, 2),
+                                                 ('Physical', 1, 2),
+                                                 ('Say So', 1, 2),
+                                                 ('Happier', 2, 2),
+                                                 ('Peaches', 2, 2),
+                                                 ('Freddie Freeloader', 3, 3),
+                                                 ('Take Five', 3, 3),
+                                                 ('My Favorite Things', 3, 3),
+                                                 ('All Blues', 3, 3),
+                                                 ('Take the "A" Train', 3, 3),
+                                                 ('In a Sentimental Mood', 3, 3),
+                                                 ('The Four Seasons: Spring', 4, 4),
+                                                 ('Rhapsody in Blue', 4, 4),
+                                                 ('Moonlight Sonata', 4, 4),
+                                                 ('Hungarian Dance No. 5', 4, 4),
+                                                 ('Ave Maria', 4, 4),
+                                                 ('Ode to Joy', 4, 4),
+                                                 ('Titanium', 5, 5),
+                                                 ('Wake Me Up', 5, 5),
+                                                 ('Levels', 5, 5),
                                                  ('Animals', 5, 5),
                                                  ('Scary Monsters and Nice Sprites', 5, 5),
                                                  ('One More Time', 5, 5);

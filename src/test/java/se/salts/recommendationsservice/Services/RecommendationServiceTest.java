@@ -42,7 +42,7 @@ class RecommendationServiceTest {
 
     @Test
     void testGetTopRecommendationsWithListenedMedia() {
-        // Given
+
         Long userId = 1L;
         User user = new User();
         user.setId(userId);
@@ -59,7 +59,7 @@ class RecommendationServiceTest {
         List<Long> listenedMediaIds = Arrays.asList(1L);
         when(recommendationRepository.findListenedMediaIdsByUserId(userId)).thenReturn(listenedMediaIds);
 
-        // When
+
         List<Media> recommendations = recommendationService.getTopRecommendations(userId);
 
         // Then
@@ -85,10 +85,10 @@ class RecommendationServiceTest {
         List<Long> listenedMediaIds = new ArrayList<>();
         when(recommendationRepository.findListenedMediaIdsByUserId(userId)).thenReturn(listenedMediaIds);
 
-        // When
+
         List<Media> recommendations = recommendationService.getTopRecommendations(userId);
 
-        // Then
+
         assertEquals(2, recommendations.size());
     }
 
@@ -113,10 +113,10 @@ class RecommendationServiceTest {
         allMedia.add(new Media(3L, "Song 3", new Genre(3L, "Classical"), null)); // Ensure genre is set
         when(mediaRepository.findAll()).thenReturn(allMedia);
 
-        // When
+
         List<Media> recommendations = recommendationService.getTopRecommendations(userId);
 
-        // Then
+
         assertEquals(2, recommendations.size());
         assertTrue(recommendations.stream().anyMatch(media -> media.getTitle().equals("Song 2")));
         assertTrue(recommendations.stream().anyMatch(media -> media.getTitle().equals("Song 3")));

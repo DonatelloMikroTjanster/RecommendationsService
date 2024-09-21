@@ -26,7 +26,7 @@ INSERT INTO media (title, user_id, genre_id) VALUES
                                                  ('Take Five', 3, 3),
                                                  ('My Favorite Things', 3, 3),
                                                  ('All Blues', 3, 3),
-                                                 ('Take the "A" Train', 3, 3),
+                                                 ('Take the A Train', 3, 3),
                                                  ('In a Sentimental Mood', 3, 3),
                                                  ('The Four Seasons: Spring', 4, 4),
                                                  ('Rhapsody in Blue', 4, 4),

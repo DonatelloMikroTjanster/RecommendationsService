@@ -109,8 +109,8 @@ class RecommendationServiceTest {
         when(recommendationRepository.findListenedMediaIdsByUserId(userId)).thenReturn(listenedMediaIds);
 
         List<Media> allMedia = new ArrayList<>();
-        allMedia.add(new Media(2L, "Song 2", new Genre(2L, "Jazz"), null)); // Ensure genre is set
-        allMedia.add(new Media(3L, "Song 3", new Genre(3L, "Classical"), null)); // Ensure genre is set
+        allMedia.add(new Media(2L, "Song 2", new Genre(2L, "Jazz"), null));
+        allMedia.add(new Media(3L, "Song 3", new Genre(3L, "Classical"), null));
         when(mediaRepository.findAll()).thenReturn(allMedia);
 
 

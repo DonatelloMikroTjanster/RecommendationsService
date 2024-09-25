@@ -21,7 +21,7 @@ public class RecommendationController {
     private RecommendationService recommendationService;
 
     @GetMapping("/{userId}")
-    public ResponseEntity<List<Media>> getRecommendations(@PathVariable Long userId) {
+    public ResponseEntity<List<Media>> getRecommendations(@PathVariable ("userId") Long userId) {
         try {
             List<Media> recommendations = recommendationService.getTopRecommendations(userId);
             List<Media> distinctRecommendations = recommendations.stream().distinct().collect(Collectors.toList());

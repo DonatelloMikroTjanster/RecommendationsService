@@ -17,9 +17,11 @@ public class Media {
     @Column(name = "title", nullable = false)
     private String title;
 
-    @ManyToOne
+   /* @ManyToOne
     @JoinColumn(name = "genre_id")
-    private Genre genre;
+    private Genre genre; */
+   @Column(name = "genre", nullable = false, length = 100)
+   private String genre;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -28,13 +30,6 @@ public class Media {
 
 
     public Media() {
-    }
-
-    public Media(Long id, String title, Genre genre, User user) {
-        this.id = id;
-        this.title = title;
-        this.genre = genre;
-        this.user = user;
     }
 
     public Long getId() {
@@ -53,11 +48,11 @@ public class Media {
         this.title = title;
     }
 
-    public Genre getGenre() {
+    public String getGenre() {
         return genre;
     }
 
-    public void setGenre(Genre genre) {
+    public void setGenre(String genre) {
         this.genre = genre;
     }
 

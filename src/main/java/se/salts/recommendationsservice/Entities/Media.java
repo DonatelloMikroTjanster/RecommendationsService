@@ -51,6 +51,17 @@ public class Media {
     public Media() {
     }
 
+    public Media(Long id, String title, String genre, String mediaCategory, LocalDate releaseDate, String url, String duration, User user) {
+        this.id = id;
+        this.title = title;
+        this.genre = genre;
+        this.mediaCategory = mediaCategory;
+        this.releaseDate = releaseDate;
+        this.url = url;
+        this.duration = duration;
+        this.user = user;
+    }
+
     public Long getId() {
         return id;
     }

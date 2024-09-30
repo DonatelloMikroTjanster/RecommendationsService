@@ -58,8 +58,8 @@ public class RecommendationService {
     private List<Media> getOtherGenreMedia(List<Long> topGenreIds, List<Long> listenedMediaIds) {
         List<Media> allMedia = mediaRepository.findAll();
         List<Media> otherGenreMedia = allMedia.stream()
-                .filter(media -> !topGenreIds.contains(media.getGenre().getId()))
-                .filter(media -> !listenedMediaIds.contains(media.getId()))
+                .filter(media -> !topGenreIds.contains(media.getGenre()))
+                .filter(m -> !listenedMediaIds.contains(m.getId()))
                 .collect(Collectors.toList());
 
         Collections.shuffle(otherGenreMedia);

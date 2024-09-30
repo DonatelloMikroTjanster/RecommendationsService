@@ -3,21 +3,28 @@ package se.salts.recommendationsservice.Entities;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
 @Entity
-@Table(name = "my_user")
+@Table(name = "users")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Long id;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "username", nullable = false, length = 100)
     private String name;
+
+    @Column(name = "email", nullable = false, length = 100)
+    private String email;
+
+    @Column(name = "created_at", nullable = false, length = 100)
+    private LocalDateTime createdAt;
 
     @OneToMany(mappedBy = "user")
     @JsonManagedReference
@@ -29,13 +36,6 @@ public class User {
 
 
     public User() {
-    }
-
-    public User(Long id, String name, List<Media> media, Set<Recommendation> recommendations) {
-        this.id = id;
-        this.name = name;
-        this.media = media;
-        this.recommendations = recommendations;
     }
 
     public Long getId() {
@@ -62,11 +62,27 @@ public class User {
         this.media = media;
     }
 
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
     public Set<Recommendation> getRecommendations() {
         return recommendations;
     }
 
     public void setRecommendations(Set<Recommendation> recommendations) {
         this.recommendations = recommendations;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

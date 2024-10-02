@@ -1,15 +1,17 @@
 package se.salts.recommendationsservice.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 @Entity
-@Table(name = "users")
+@Table(name = "user")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class User {
 
@@ -17,22 +19,24 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "username", nullable = false, length = 100)
+    @Column(name = "username", length = 100)
     private String name;
 
-    @Column(name = "email", nullable = false, length = 100)
+    @Column(name = "email", length = 100)
     private String email;
 
-    @Column(name = "created_at", nullable = false, length = 100)
+    @Column(name = "created_at", length = 100)
     private LocalDateTime createdAt;
 
     @OneToMany(mappedBy = "user")
     @JsonManagedReference
-    private List<Media> media;
+    @JsonIgnore
+    private Set<Media> media =new HashSet<>();
 
     @OneToMany(mappedBy = "user")
     @JsonManagedReference
-    private Set<Recommendation> recommendations;
+    @JsonIgnore
+    private Set<Recommendation> recommendations = new HashSet<>();
 
 
     public User() {
@@ -54,11 +58,11 @@ public class User {
         this.name = name;
     }
 
-    public List<Media> getMedia() {
+    public Set<Media> getMedia() {
         return media;
     }
 
-    public void setMedia(List<Media> media) {
+    public void setMedia(Set<Media> media) {
         this.media = media;
     }
 

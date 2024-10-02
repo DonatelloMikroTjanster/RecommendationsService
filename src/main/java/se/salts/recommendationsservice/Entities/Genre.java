@@ -1,7 +1,11 @@
 package se.salts.recommendationsservice.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "genre")
@@ -13,15 +17,15 @@ public class Genre {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "name", length = 100)
     private String name;
 
-    public Genre() {
-    }
+    @OneToMany(mappedBy = "genre", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private Set<Media> media = new HashSet<>();
 
-    public Genre(Long id, String name) {
-        this.id = id;
-        this.name = name;
+
+    public Genre() {
     }
 
     public Long getId() {
@@ -38,5 +42,13 @@ public class Genre {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Set<Media> getMedia() {
+        return media;
+    }
+
+    public void setMedia(Set<Media> media) {
+        this.media = media;
     }
 }

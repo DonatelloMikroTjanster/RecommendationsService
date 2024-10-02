@@ -1,10 +1,13 @@
 package se.salts.recommendationsservice.Entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "media")
@@ -16,50 +19,51 @@ public class Media {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "title", nullable = false)
+    @Column(name = "title", length = 100)
     private String title;
 
 
-    @Column(name = "media_type", nullable = false, length = 100)
-    private String mediaCategory;
+    @Column(name = "media_type", length = 100)
+    private String mediaType;
+    @ManyToOne
+    @JoinColumn(name = "genre_id")
+    private Genre genre;
 
-    @Column(name = "genre", nullable = false, length = 100)
-    private String genre;
 
-
-    @Column(name = "release_date", nullable = false, length = 100)
+    @Column(name = "release_date",length = 100)
     private LocalDate releaseDate;
 
-    @Column(name = "url", nullable = false, length = 100)
+    @Column(name = "url", length = 100)
     private String url;
 
 
-    @Column(name = "duration", nullable = false, length = 100)
+    @Column(name = "duration",length = 100)
     private String duration;
 
-   /* @ManyToOne
-    @JoinColumn(name = "genre_id")
-    private Genre genre; */
 
-
-    @ManyToOne
-    @JoinColumn(name = "user_id")
+    @ManyToOne (optional = true)
+    @JoinColumn(name = "user_id", nullable = true)
     @JsonBackReference
+    @JsonIgnore
     private User user;
 
+    @OneToMany(mappedBy = "media", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private Set<Recommendation> recommendations = new HashSet<>();
+
+    @OneToMany(mappedBy = "media", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private Set<PlaybackHistory> playBackHistories = new HashSet<>();
+
+    @OneToMany(mappedBy = "media", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private Set<TopMedia> topMedia = new HashSet<>();
+
+    @OneToMany(mappedBy = "media", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private Set<Rating> ratings = new HashSet<>();
 
     public Media() {
-    }
-
-    public Media(Long id, String title, String genre, String mediaCategory, LocalDate releaseDate, String url, String duration, User user) {
-        this.id = id;
-        this.title = title;
-        this.genre = genre;
-        this.mediaCategory = mediaCategory;
-        this.releaseDate = releaseDate;
-        this.url = url;
-        this.duration = duration;
-        this.user = user;
     }
 
     public Long getId() {
@@ -78,12 +82,20 @@ public class Media {
         this.title = title;
     }
 
-    public String getMediaCategory() {
-        return mediaCategory;
+    public String getMediaType() {
+        return mediaType;
     }
 
-    public void setMediaCategory(String mediaCategory) {
-        this.mediaCategory = mediaCategory;
+    public void setMediaType(String mediaType) {
+        this.mediaType = mediaType;
+    }
+
+    public Genre getGenre() {
+        return genre;
+    }
+
+    public void setGenre(Genre genre) {
+        this.genre = genre;
     }
 
     public LocalDate getReleaseDate() {
@@ -110,19 +122,43 @@ public class Media {
         this.duration = duration;
     }
 
-    public String getGenre() {
-        return genre;
-    }
-
-    public void setGenre(String genre) {
-        this.genre = genre;
-    }
-
     public User getUser() {
         return user;
     }
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Set<Recommendation> getRecommendations() {
+        return recommendations;
+    }
+
+    public void setRecommendations(Set<Recommendation> recommendations) {
+        this.recommendations = recommendations;
+    }
+
+    public Set<PlaybackHistory> getPlayBackHistories() {
+        return playBackHistories;
+    }
+
+    public void setPlayBackHistories(Set<PlaybackHistory> playBackHistories) {
+        this.playBackHistories = playBackHistories;
+    }
+
+    public Set<TopMedia> getTopMedia() {
+        return topMedia;
+    }
+
+    public void setTopMedia(Set<TopMedia> topMedia) {
+        this.topMedia = topMedia;
+    }
+
+    public Set<Rating> getRatings() {
+        return ratings;
+    }
+
+    public void setRatings(Set<Rating> ratings) {
+        this.ratings = ratings;
     }
 }

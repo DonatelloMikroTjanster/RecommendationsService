@@ -9,9 +9,9 @@ import java.util.List;
 
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    @Query("SELECT g.id FROM Genre g JOIN Media m ON g.id = m.genre.id " +
+   /* @Query("SELECT g.id FROM Genre g JOIN Media m ON g.id = m.genre.id " +
             "WHERE m.user.id = :userId " +
             "GROUP BY g.id " +
             "ORDER BY COUNT(m.id) DESC")
-    List<Long> findTopGenresForUser(@Param("userId") Long userId);
+    List<Long> findTopGenresForUser(@Param("userId") Long userId); */
 }

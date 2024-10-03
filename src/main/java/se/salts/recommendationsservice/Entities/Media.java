@@ -47,6 +47,10 @@ public class Media {
     @JsonIgnore
     private User user;
 
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
+    @JoinColumn(name = "album_id")
+    private Album album;
+
     @OneToMany(mappedBy = "media", cascade = CascadeType.ALL)
     @JsonIgnore
     private Set<Recommendation> recommendations = new HashSet<>();
@@ -62,6 +66,8 @@ public class Media {
     @OneToMany(mappedBy = "media", cascade = CascadeType.ALL)
     @JsonIgnore
     private Set<Rating> ratings = new HashSet<>();
+
+
 
     public Media() {
     }
@@ -160,5 +166,13 @@ public class Media {
 
     public void setRatings(Set<Rating> ratings) {
         this.ratings = ratings;
+    }
+
+    public Album getAlbum() {
+        return album;
+    }
+
+    public void setAlbum(Album album) {
+        this.album = album;
     }
 }

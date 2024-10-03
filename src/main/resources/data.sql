@@ -1,5 +1,5 @@
 -- Insert Users
-INSERT INTO user (id, username, email, created_at)
+INSERT IGNORE INTO user (id, username, email, created_at)
 VALUES
     (1, 'kalle_anka', 'kalle@example.com', '2023-01-01T10:00:00'),
     (2, 'lisa_svensson', 'lisa@example.com', '2023-01-02T11:00:00'),
@@ -7,7 +7,7 @@ VALUES
     (4, 'anna_andersson', 'anna@example.com', '2023-01-04T13:00:00');
 
 -- Insert Genres
-INSERT INTO genre (id, name)
+INSERT IGNORE INTO genre (id, name)
 VALUES
     (1, 'Technology'),
     (2, 'Nature'),
@@ -17,7 +17,7 @@ VALUES
     (6, 'Classical');
 
 -- Insert Media (now using genre_id to refer to the genre table)
-INSERT INTO media (id, title, media_type, genre_id, release_date, url, duration, user_id)
+INSERT IGNORE INTO media (id, title, media_type, genre_id, release_date, url, duration, user_id)
 VALUES
     (1, 'Tech Talk Episode 1', 'Podcast', 1, '2023-01-01', 'http://example.com/tech-talk-1', '30:00', 1),  -- Kalle, Technology
     (2, 'Planet Earth II Episode 1', 'Documentary', 2, '2016-11-06', 'http://example.com/planet-earth-2-1', '60:00', 2),  -- Lisa, Nature
@@ -46,7 +46,7 @@ VALUES
 
 
 -- Insert PlaybackHistory (track media users have played)
-INSERT INTO playback_history (id, user_id, media_id, played_at)
+INSERT IGNORE INTO playback_history (id, user_id, media_id, played_at)
 VALUES
     (1, 1, 1, '2023-01-01T10:30:00'),  -- Kalle listened to Tech Talk Episode 1
     (2, 2, 2, '2023-01-02T12:00:00'),  -- Lisa listened to Planet Earth II Episode 1
@@ -58,7 +58,7 @@ VALUES
     (8, 4, 12, '2023-04-01T10:30:00'); -- Anna listened to Classical Masterpieces
 
 -- Insert Ratings (user feedback on media)
-INSERT INTO ratings (id, user_id, media_id, rating)
+INSERT IGNORE INTO ratings (id, user_id, media_id, rating)
 VALUES
     (1, 1, 1, 'UP'),  -- Kalle liked Tech Talk Episode 1
     (2, 2, 2, 'DOWN'),  -- Lisa disliked Planet Earth II Episode 1
@@ -71,7 +71,7 @@ VALUES
 
 
 -- Insert Top Media (track media popularity by play count)
-INSERT INTO top_media (id, user_id, media_id, play_count)
+INSERT IGNORE INTO top_media (id, user_id, media_id, play_count)
 VALUES
     (1, 1, 1, 5),  -- Tech Talk Episode 1 is popular with Kalle (5 plays)
     (2, 2, 2, 3),  -- Planet Earth II Episode 1 is moderately popular with Lisa
@@ -84,7 +84,7 @@ VALUES
 
 
 -- Insert Recommendations (based on playback history and top media)
-INSERT INTO recommendation (id, user_id, media_id)
+INSERT IGNORE INTO recommendation (id, user_id, media_id)
 VALUES
     (1, 1, 2),  -- Recommend Planet Earth II Episode 1 to Kalle (unlistened)
     (2, 2, 1),  -- Recommend Tech Talk Episode 1 to Lisa (unlistened)

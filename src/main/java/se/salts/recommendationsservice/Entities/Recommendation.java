@@ -15,27 +15,25 @@ public class Recommendation {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
-    @JsonBackReference
-    private User user;
-
-    @ManyToOne
     @JoinColumn(name = "media_id")
     @JsonBackReference
     private Media media;
 
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    @JsonBackReference
+    private User user;
+
+
     @Column(name = "listened")
     private Boolean listened;
 
-    public Recommendation() {
-    }
+    @Column(name = "is_recommended")
+    private Boolean isRecommended = false;
 
-    public Recommendation(Long id, User user, Media media, Boolean listened) {
-        this.id = id;
-        this.user = user;
-        this.media = media;
-        this.listened = listened;
+
+    public Recommendation() {
     }
 
     public Long getId() {
@@ -46,14 +44,6 @@ public class Recommendation {
         this.id = id;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
     public Media getMedia() {
         return media;
     }
@@ -62,11 +52,27 @@ public class Recommendation {
         this.media = media;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     public Boolean getListened() {
         return listened;
     }
 
     public void setListened(Boolean listened) {
         this.listened = listened;
+    }
+
+    public Boolean getRecommended() {
+        return isRecommended;
+    }
+
+    public void setRecommended(Boolean recommended) {
+        isRecommended = recommended;
     }
 }

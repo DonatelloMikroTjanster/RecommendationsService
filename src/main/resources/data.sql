@@ -1,64 +1,18 @@
-INSERT INTO my_user (id, name) VALUES
-                                   (1, 'david.martin'),
-                                   (2, 'emma_smith'),
-                                   (3, 'frank_jones'),
-                                   (4, 'grace.brown'),
-                                   (5, 'hannah_johnson');
 
-INSERT INTO genre (id, name) VALUES
-                                 (1, 'Rock'),
-                                 (2, 'Pop'),
-                                 (3, 'Jazz'),
-                                 (4, 'Classical'),
-                                 (5, 'Electronic'),
-                                 (6, 'Hip Hop');
-
-INSERT INTO media (title, user_id, genre_id) VALUES
-                                                 ('Don''t Start Now', 1, 2),
-                                                 ('Levitating', 1, 2),
-                                                 ('Bad Guy', 2, 2),
-                                                 ('Watermelon Sugar', 2, 2),
-                                                 ('Physical', 1, 2),
-                                                 ('Say So', 1, 2),
-                                                 ('Happier', 2, 2),
-                                                 ('Peaches', 2, 2),
-                                                 ('Freddie Freeloader', 3, 3),
-                                                 ('Take Five', 3, 3),
-                                                 ('My Favorite Things', 3, 3),
-                                                 ('All Blues', 3, 3),
-                                                 ('Take the A Train', 3, 3),
-                                                 ('In a Sentimental Mood', 3, 3),
-                                                 ('The Four Seasons: Spring', 4, 4),
-                                                 ('Rhapsody in Blue', 4, 4),
-                                                 ('Moonlight Sonata', 4, 4),
-                                                 ('Hungarian Dance No. 5', 4, 4),
-                                                 ('Ave Maria', 4, 4),
-                                                 ('Ode to Joy', 4, 4),
-                                                 ('Titanium', 5, 5),
-                                                 ('Wake Me Up', 5, 5),
-                                                 ('Levels', 5, 5),
-                                                 ('Animals', 5, 5),
-                                                 ('Scary Monsters and Nice Sprites', 5, 5),
-                                                 ('One More Time', 5, 5);
-
-INSERT INTO recommendation (user_id, media_id, listened) VALUES
-                                                             (1, 1, TRUE),
-                                                             (1, 2, TRUE),
-                                                             (2, 3, TRUE),
-                                                             (2, 4, TRUE),
-                                                             (3, 5, TRUE),
-                                                             (3, 6, TRUE),
-                                                             (4, 7, TRUE),
-                                                             (4, 8, TRUE),
-                                                             (5, 9, TRUE),
-                                                             (5, 10, TRUE),
-                                                             (1, 3, FALSE),
-                                                             (1, 4, FALSE),
-                                                             (2, 1, FALSE),
-                                                             (2, 5, FALSE),
-                                                             (3, 7, FALSE),
-                                                             (3, 8, FALSE),
-                                                             (4, 9, FALSE),
-                                                             (4, 10, FALSE),
-                                                             (5, 11, FALSE),
-                                                             (5, 12, FALSE);
+-- Insert Recommendations (based on playback history and top media)
+INSERT IGNORE INTO recommendation (id, user_id, media_id, listened, is_recommended)
+VALUES
+    (1, 1, 2, false, true),  -- Recommend Planet Earth II Episode 1 to Kalle (unlistened)
+    (2, 2, 1, false, true),  -- Recommend Tech Talk Episode 1 to Lisa (unlistened)
+    (3, 3, 4, false, true),  -- Recommend Billie Jean to Erik (unlistened)
+    (4, 4, 3, false, true),  -- Recommend Come Together to Anna (unlistened)
+    (5, 1, 5, false, true),  -- Recommend So What to Kalle for genre diversity (Jazz)
+    (6, 2, 6, false, true),  -- Recommend Beethoven Symphony No. 9 to Lisa for genre diversity (Classical)
+    (7, 1, 7, false, true),  -- Additional recommendation for Kalle
+    (8, 2, 8, false, true),  -- Additional recommendation for Lisa
+    (9, 3, 9, false, true),  -- Additional recommendation for Erik
+    (10, 4, 10, false, true), -- Additional recommendation for Anna
+    (11, 1, 13, false, true), -- Recommend Technology Insights to Kalle for variety
+    (12, 2, 14, false, true), -- Recommend The Nature Chronicles to Lisa for variety
+    (13, 3, 15, false, true), -- Recommend Rock Legends Vol 3 to Erik for variety
+    (14, 4, 16, false, true); -- Recommend Pop Forever to Anna for variety

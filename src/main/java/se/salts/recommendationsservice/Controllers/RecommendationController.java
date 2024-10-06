@@ -20,7 +20,7 @@ public class RecommendationController {
     @Autowired
     private RecommendationService recommendationService;
 
-    @GetMapping("/{userId}")
+   @GetMapping("/{userId}")
     public ResponseEntity<List<Media>> getRecommendations(@PathVariable ("userId") Long userId) {
         try {
             List<Media> recommendations = recommendationService.getTopRecommendations(userId);
@@ -30,4 +30,30 @@ public class RecommendationController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
+
+
+   /* @GetMapping("/{userId}")
+    public ResponseEntity<List<Media>> getRecommendations(@PathVariable("userId") Long userId) {
+        try {
+            System.out.println("Fetching recommendations for userId: " + userId);
+            List<Media> recommendations = recommendationService.getTopRecommendations(userId);
+            List<Media> distinctRecommendations = recommendations.stream().distinct().collect(Collectors.toList());
+            System.out.println("Recommendations fetched successfully for userId: " + userId);
+            return ResponseEntity.ok(distinctRecommendations);
+        } catch (RuntimeException e) {
+            System.err.println("Runtime error fetching recommendations for userId: " + userId);
+            e.printStackTrace();
+            if (e.getMessage().equals("User not found")) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            }
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        } catch (Exception e) {
+            System.err.println("Error fetching recommendations for userId: " + userId);
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }*/
+
+
+
 }

@@ -12,6 +12,7 @@ import se.salts.recommendationsservice.Repositories.MediaRepository;
 import se.salts.recommendationsservice.Repositories.RecommendationRepository;
 import se.salts.recommendationsservice.Repositories.UserRepository;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -52,8 +53,8 @@ class RecommendationServiceTest {
         when(recommendationRepository.findTopGenresByUserId(userId)).thenReturn(topGenreIds);
 
         List<Media> genreMedia = new ArrayList<>();
-        genreMedia.add(new Media(1L, "Song 1", null, null));
-        genreMedia.add(new Media(2L, "Song 2", null, null));
+        genreMedia.add(new Media(1L, "Song 1", "Pop", "Music", LocalDate.now(), "url1", "3:30", user));
+        genreMedia.add(new Media(2L, "Song 2", "Pop", "Music", LocalDate.now(), "url2", "4:00", user));
         when(mediaRepository.findByGenreIdIn(new HashSet<>(topGenreIds))).thenReturn(genreMedia);
 
         List<Long> listenedMediaIds = Arrays.asList(1L);
@@ -78,8 +79,8 @@ class RecommendationServiceTest {
         when(recommendationRepository.findTopGenresByUserId(userId)).thenReturn(topGenreIds);
 
         List<Media> genreMedia = new ArrayList<>();
-        genreMedia.add(new Media(1L, "Song 1", null, null));
-        genreMedia.add(new Media(2L, "Song 2", null, null));
+        genreMedia.add(new Media(1L, "Song 1", "Pop", "Music", LocalDate.now(), "url1", "3:30", user));
+        genreMedia.add(new Media(2L, "Song 2", "Pop", "Music", LocalDate.now(), "url2", "4:00", user));
         when(mediaRepository.findByGenreIdIn(new HashSet<>(topGenreIds))).thenReturn(genreMedia);
 
         List<Long> listenedMediaIds = new ArrayList<>();
@@ -102,15 +103,15 @@ class RecommendationServiceTest {
         List<Long> topGenreIds = Arrays.asList(1L);
         when(recommendationRepository.findTopGenresByUserId(userId)).thenReturn(topGenreIds);
 
-        Media mediaWithGenre = new Media(1L, "Song 1", new Genre(1L, "Pop"), null);
+        Media mediaWithGenre = new Media(1L, "Song 1", "Pop", "Music", LocalDate.now(), "url1", "3:30", user);
         when(mediaRepository.findByGenreIdIn(new HashSet<>(topGenreIds))).thenReturn(Arrays.asList(mediaWithGenre));
 
         List<Long> listenedMediaIds = Arrays.asList(1L);
         when(recommendationRepository.findListenedMediaIdsByUserId(userId)).thenReturn(listenedMediaIds);
 
         List<Media> allMedia = new ArrayList<>();
-        allMedia.add(new Media(2L, "Song 2", new Genre(2L, "Jazz"), null));
-        allMedia.add(new Media(3L, "Song 3", new Genre(3L, "Classical"), null));
+        allMedia.add(new Media(2L, "Song 2", "Jazz", "Music", LocalDate.now(), "url2", "4:00", user));
+        allMedia.add(new Media(3L, "Song 3", "Classical", "Music", LocalDate.now(), "url3", "5:00", user));
         when(mediaRepository.findAll()).thenReturn(allMedia);
 
 

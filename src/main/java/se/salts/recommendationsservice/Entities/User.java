@@ -1,41 +1,45 @@
 package se.salts.recommendationsservice.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+
+import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 @Entity
-@Table(name = "my_user")
+@Table(name = "user")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Long id;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "user_name", length = 100)
     private String name;
 
-    @OneToMany(mappedBy = "user")
-    @JsonManagedReference
-    private List<Media> media;
+    @Column(name = "email", length = 100)
+    private String email;
+
+    @Column(name = "created_at", length = 100)
+    private LocalDateTime createdAt;
 
     @OneToMany(mappedBy = "user")
     @JsonManagedReference
-    private Set<Recommendation> recommendations;
+    @JsonIgnore
+    private Set<Media> media =new HashSet<>();
+
+    @OneToMany(mappedBy = "user")
+    @JsonManagedReference
+    @JsonIgnore
+    private Set<Recommendation> recommendations = new HashSet<>();
 
 
     public User() {
-    }
-
-    public User(Long id, String name, List<Media> media, Set<Recommendation> recommendations) {
-        this.id = id;
-        this.name = name;
-        this.media = media;
-        this.recommendations = recommendations;
     }
 
     public Long getId() {
@@ -54,12 +58,20 @@ public class User {
         this.name = name;
     }
 
-    public List<Media> getMedia() {
+    public Set<Media> getMedia() {
         return media;
     }
 
-    public void setMedia(List<Media> media) {
+    public void setMedia(Set<Media> media) {
         this.media = media;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 
     public Set<Recommendation> getRecommendations() {
@@ -68,5 +80,13 @@ public class User {
 
     public void setRecommendations(Set<Recommendation> recommendations) {
         this.recommendations = recommendations;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
